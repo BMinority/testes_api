@@ -1,3 +1,6 @@
+--Criação do DB
+CREATE DATABASE dindin;
+
 -- Criação da tabela usuarios
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
