@@ -14,7 +14,11 @@ rotas.use(autenticacaoMiddleware);
 
 rotas.get('/categorias', categoriaControlador.listarCategorias);
 
+rotas.get('/usuario', usuarioControlador.detalharUsuario);
+rotas.put('/usuario', usuarioControlador.atualizarUsuario);
+
 rotas.get('/transacoes', transacaoControlador.listarTransacoes);
+rotas.get('/transacoes/extrato', transacaoControlador.obterExtrato); // Nova rota
 rotas.get('/transacoes/:id', transacaoControlador.obterTransacaoPorId);
 rotas.post('/transacoes', transacaoControlador.cadastrarTransacao);
 rotas.put('/transacoes/:id', transacaoControlador.atualizarTransacao);

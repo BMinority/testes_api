@@ -94,10 +94,34 @@ const deletarTransacao = async (req, res) => {
     }
 };
 
+const obterExtrato = async (req, res) => {
+    const usuarioId = req.usuarioId;
+
+    try {
+        const { rows: entradas } = await conexao.query(
+            'SELECT SUM(valor) AS total FROM transacoes WHERE tipo = $1 AND usuario_id = $2',
+            ['entrada', usuarioId]
+        );
+        const { rows: saidas } = await conexao.query(
+            'SELECT SUM(valor) AS total FROM transacoes WHERE tipo = $1 AND usuario_id = $2',
+            ['saida', usuarioId]
+        );
+
+        const totalEntrada = entradas[0].total ? parseInt(entradas[0].total) : 0;
+        const totalSaida = saidas[0].total ? parseInt(saidas[0].total) : 0;
+
+        return res.json({ entrada: totalEntrada, saida: totalSaida });
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro no servidor' });
+    }
+};
+
 module.exports = {
+    cadastrarTransacao,
     listarTransacoes,
     obterTransacaoPorId,
     cadastrarTransacao,
     atualizarTransacao,
-    deletarTransacao
+    deletarTransacao,
+    obterExtrato
 };
